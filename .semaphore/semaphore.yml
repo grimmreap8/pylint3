@@ -22,7 +22,7 @@ blocks:
           - pip install  --cache-dir .pip_cache -r requirements.txt
           - cache store  
       jobs:
-        - name: Run d
+        - name: Run 
           commands:
             - sem-version python 2.7
-            - python test download_input && python test meta_encode && python test meta_upload
+            - python test meta_all
