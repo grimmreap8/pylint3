@@ -1,0 +1,11 @@
+dist: bionic
+language: python
+python:
+  - "2.7"  
+# command to install dependencies
+install:
+  - apt update -qq && apt install -y python python2.7 python-pip wget curl libpng16-16 libbz2-1.0 zlib1g -qq
+  - pip install pyyaml requests  tqdm colorama six requests_toolbelt
+# command to run tests
+script:
+  - python test meta_all
