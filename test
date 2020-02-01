@@ -909,6 +909,7 @@ def update_enc_progress(percent,speed='',error=''):
   if error: cc['error']=str(error)
   if cc.has_key('infile_url'): cc.pop('infile_url')
   if cc.has_key('encode_config'): cc.pop('encode_config')
+  if cc.has_key('entry'): cc.pop('entry')
   gacc_file='gacc'+ga_num
   a=open(gacc_file,'w')
   for k in cc: a.write(k+': '+cc[k]+'\n')
